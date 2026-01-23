@@ -1,0 +1,156 @@
+    1  git init
+    2  docker-compose build
+    3  docker images
+    4  clear
+    5  cd api
+    6  npm init -y
+    7  npm install express
+    8  npm start
+    9  cd ..
+   10  docker-compose build
+   11  docker images
+   12  docker-compose up
+   13  docker-compose up --build
+   14  docker ps
+   15  docker ps -a
+   16  docker rm 12d91bf360eb
+   17  docker rm 4dce27ce37ca
+   18  docker rm 215325be5bf6 
+   19  docker rm b7cd2122cb91
+   20  docker-compose up
+   21  clear
+   22  docker-compose up --build
+   23  clear
+   24  docker images
+   25  docker-compose build
+   26  clear
+   27  docker images
+   28  docker-compose up --build
+   29  clear
+   30  cd api
+   31  ls
+   32  docker build -t greatvand/realworld-api:latest .
+   33  docker images
+   34  docker login
+   35  docker push greatvand/realworld-api:latest
+   36  clear
+   37  npm run start
+   38  npm run start
+   39  npm install winston winston-loki
+   40  npm run start
+   41  npm run start
+   42  npm run start
+   43  npm run start
+   44  npm init -y
+   45  npm install express
+   46  npm run start
+   47  npm run start
+   48  npm install prom-client
+   49  npm run start
+   50  npm run start
+   51  npm run start
+   52  docker-compose up
+   53  docker-compose up
+   54  vim App.java
+   55  vi Jenkinsfile
+   56  git add .
+   57  git commit -m "Added Jenkinsfile"
+   58  git push
+   59  git init
+   60  git add .
+   61  git commit -m "Initial commit"
+   62  git remote add origin https://github.com/greatvand/node-js-api.git
+   63  git push -u origin main
+   64  export PRODUCT_CATALOG_PORT=8088
+   65  go build -o product-catalog . 
+   66  ./product-catalog 
+   67  export PRODUCT_CATALOG_PORT=8088
+   68  go build -o product-catalog . 
+   69  ./product-catalog 
+   70  clear
+   71  history
+   72  kubectl get services
+   73  kubectl edit svc opentelemetry-demo-frontendproxy
+   74  kubectl get services
+   75  nslookup af8e3707f246b4da8ba40bdaf9a4556c-807597263.us-east-1.elb.amazonaws.com
+   76  nsloopup google.co
+   77  nsloopup google.com
+   78  nslookup google.com
+   79  ls
+   80  openssl pkcs8 -topk8 -inform PEM -outform PEM -in github.pem -out jenkins-ready-key.pem -nocrypt
+   81  echo "hello"
+   82  git init
+   83  touch index.html
+   84  echo 'Hello World' > index.html 
+   85  cat index.html 
+   86  git add .
+   87  git commit -m "Initial commit"
+   88  git remote add origin https://github.com/greatvand/demo.git
+   89  git push -u origin main
+   90  git config --global user.name "Utkarsh Agarwal"
+   91  git config --global user.email "utki_says@yahoo.com"
+   92  vim chapter1.txt 
+   93  git status
+   94  git commit -m "Starting my book"
+   95  git status
+   96  touch outline.txt
+   97  echo "We have to create several characters" > outline.txt 
+   98  git status
+   99  git add .
+  100  git status
+  101  git commit -m "Added outline"
+  102  git log
+  103  git status
+  104  mvn archetype:generate   -DgroupId=com.mycompany.app   -DartifactId=my-app   -DarchetypeArtifactId=maven-archetype-quickstart   -DarchetypeVersion=1.5   -DinteractiveMode=false
+  105  cd my-app
+  106  vim pom.xml
+  107  git init
+  108  git remote add origin https://github.com/greatvand/sonarqube.git
+  109  git push origin -u main
+  110  git add .
+  111  git commit -m "Initial commit"
+  112  git push origin -u main
+  113  ls
+  114  echo "content" >> chapter1.txt
+  115  echo "content" >> outline.txt
+  116  git add outline.txt 
+  117  git status
+  118  git commit -m "Made some changes to outline and chapter"
+  119  git status
+  120  git log --oneline
+  121  git add chapter1.txt 
+  122  git commit --amend
+  123  git status
+  124  git log
+  125  touch .gitignore
+  126  echo images/ > .gitignore
+  127  git status
+  128  git log
+  129  git branch
+  130  git branch chapter2
+  131  git branch
+  132  git log
+  133  git switch chapter2
+  134  git branch
+  135  git log
+  136  touch chapter2.txt
+  137  echo "this is chapter2" > chapter2.txt 
+  138  echo "adding chapter 2 to the outline" >> outline.txt
+  139  git log
+  140  git switch main
+  141  git swithc main
+  142  git switch chapter2
+  143  git add .
+  144  git status
+  145  git commit -m "Added content to chapter2 and modified the outline"
+  146  git log
+  147  git switch main
+  148  git log
+  149  git switch chapter2
+  150  git status
+  151  git log
+  152  git main
+  153  git switch main
+  154  git merge chapter2
+  155  git log
+  156  history > commands2301.txt
