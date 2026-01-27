@@ -1,0 +1,27 @@
+Navigate to your Desktop making it your new current working directory
+
+If you’re using Windows Subsystem for Linux, feel free to navigate to your actual desktop
+
+Create a new directory called tmp_website
+
+Inside the tmp_website directory: Create 3 (empty) files: index.html, style.css and script.js
+
+Create a new subdirectory styles and move the file style.css to this new directory
+
+Create a new sub-directory scripts
+
+Rename the file script.js to index.js and move it to a new sub-directory scripts (in one command)
+
+Create a new (empty) file page1.html in a new sub-directory called pages (you will have to create this folder first, before creating the file)
+
+Copy the file page1.html two times and call the copies page2.html and page3.html, respectively. Those copies should be in the pages directory as well
+
+Move the file page2.html up one level (in the directory tmp_website)
+
+Delete the files index.html, page1.html and page3.html
+
+Rename the file page2.html to index.html
+
+Delete the (empty) directory pages
+
+Delete the (non-empty) directory tmp_website
