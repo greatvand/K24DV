@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Git & GitHub – Team Assignment</title>
+  <style>
+    :root {
+      --brand: #0f172a;
+      --accent: #f97316;
+      --accent2: #6366f1;
+      --green: #22c55e;
+      --red: #ef4444;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #fff;
+      color: var(--gray-800);
+      line-height: 1.7;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+    }
+
+    /* ── Header ── */
+    .header {
+      border-left: 6px solid var(--accent);
+      padding: 24px 28px;
+      background: var(--gray-50);
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 36px;
+    }
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .header h1 { font-size: 26px; font-weight: 800; color: var(--brand); }
+    .header p  { margin-top: 6px; color: var(--gray-600); font-size: 14.5px; }
+    .meta-row {
+      display: flex; flex-wrap: wrap; gap: 20px;
+      margin-top: 16px;
+    }
+    .meta-item {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+    .meta-item strong { color: var(--brand); }
+
+    /* ── Sections ── */
+    h2 {
+      font-size: 17px; font-weight: 700;
+      color: var(--brand);
+      margin: 36px 0 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    h2 .num {
+      background: var(--accent2);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    h3 {
+      font-size: 14.5px; font-weight: 700;
+      color: var(--gray-800);
+      margin: 20px 0 8px;
+    }
+    p  { margin-bottom: 10px; font-size: 14.5px; }
+    ul, ol { padding-left: 22px; margin-bottom: 10px; }
+    li { font-size: 14.5px; margin-bottom: 5px; }
+
+    /* ── Scenario banner ── */
+    .scenario {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: white;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin: 24px 0;
+    }
+    .scenario .tag {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase;
+      background: var(--accent);
+      display: inline-block; padding: 3px 10px;
+      border-radius: 4px; margin-bottom: 12px;
+    }
+    .scenario h2 { color: white; font-size: 20px; margin: 0 0 10px; }
+    .scenario p  { color: #cbd5e1; font-size: 14px; margin: 0; }
+
+    /* ── Role cards ── */
+    .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px; }
+    .role-card {
+      border-radius: 10px; padding: 20px;
+      border: 1.5px solid var(--gray-200);
+    }
+    .role-card.dev-a { border-color: #818cf8; background: #eef2ff; }
+    .role-card.dev-b { border-color: #fb923c; background: #fff7ed; }
+    .role-card .role-title {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .dev-a .role-title { color: var(--accent2); }
+    .dev-b .role-title { color: var(--accent); }
+    .role-card h3 { margin: 0 0 8px; font-size: 15px; }
+    .role-card ul { margin: 0; padding-left: 18px; }
+    .role-card li { font-size: 13.5px; }
+
+    /* ── Task timeline ── */
+    .timeline { position: relative; padding-left: 32px; margin: 16px 0; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 10px; top: 0; bottom: 0;
+      width: 2px; background: var(--gray-200);
+    }
+    .task {
+      position: relative;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+    .task::before {
+      content: '';
+      position: absolute; left: -28px; top: 20px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent2);
+      border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--accent2);
+    }
+    .task .task-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+    }
+    .task .step-num {
+      background: var(--brand); color: white;
+      font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .task .who {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 4px;
+    }
+    .who.both   { background: #dcfce7; color: #166534; }
+    .who.dev-a  { background: #eef2ff; color: #4338ca; }
+    .who.dev-b  { background: #fff7ed; color: #c2410c; }
+    .task h3 { font-size: 14px; margin: 0 0 6px; }
+    .task ul { margin: 6px 0 0; }
+
+    /* ── Code block ── */
+    .code-block {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    .code-block .comment { color: #64748b; }
+    .code-block .cmd     { color: #86efac; }
+    .code-block .flag    { color: #fb923c; }
+    .code-block .str     { color: #fde68a; }
+
+    /* ── Deliverables table ── */
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13.5px; margin: 16px 0;
+    }
+    thead th {
+      background: var(--brand); color: white;
+      padding: 10px 14px; text-align: left;
+      font-size: 12px; font-weight: 600;
+    }
+    thead th:first-child { border-radius: 8px 0 0 0; }
+    thead th:last-child  { border-radius: 0 8px 0 0; }
+    tbody tr:nth-child(even) { background: var(--gray-50); }
+    tbody td { padding: 10px 14px; border-bottom: 1px solid var(--gray-200); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ── Grading ── */
+    .grade-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin: 16px 0;
+    }
+    .grade-card {
+      border-radius: 10px; padding: 16px;
+      border: 1.5px solid var(--gray-200);
+      text-align: center;
+    }
+    .grade-card .pts {
+      font-size: 28px; font-weight: 800; color: var(--accent2);
+    }
+    .grade-card .label { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
+
+    /* ── Tips box ── */
+    .tip-box {
+      background: #fffbeb;
+      border: 1.5px solid #fbbf24;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 24px 0;
+    }
+    .tip-box .tip-title {
+      font-weight: 700; color: #92400e;
+      font-size: 13px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tip-box ul { margin: 0; }
+    .tip-box li { font-size: 13.5px; color: #78350f; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 50px; padding-top: 20px;
+      border-top: 2px solid var(--gray-200);
+      font-size: 12px; color: var(--gray-600);
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .role-grid, .grade-grid { grid-template-columns: 1fr; }
+      body { padding: 24px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="label">Practical Assignment · Git & GitHub</div>
+    <h1>🛠️ Collaborative Feature Development</h1>
+    <p>A real-world, scenario-based team assignment to master Git workflows in action.</p>
+    <div class="meta-row">
+      <div class="meta-item"><strong>Team Size:</strong> 2 Students</div>
+      <div class="meta-item"><strong>Mode:</strong> Collaborative (Pair)</div>
+      <div class="meta-item"><strong>Skills:</strong> Branching · PRs · Conflicts · Reviews</div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div class="scenario">
+    <div class="tag">📋 The Scenario</div>
+    <h2>You've just joined "DevBoard" – a startup building a task management web app.</h2>
+    <p>
+      Your team lead has set up a shared GitHub repository and assigned the two of you to develop
+      two new features simultaneously, then merge them into the main codebase — just like real developers do every day.
+      You'll use branches, pull requests, code reviews, and resolve a deliberate merge conflict along the way.
+    </p>
+  </div>
+
+  <!-- Roles -->
+  <h2><span class="num">1</span> Team Roles</h2>
+  <p>Decide who takes which role before you start. Both members participate in every phase, but ownership differs.</p>
+  <div class="role-grid">
+    <div class="role-card dev-a">
+      <div class="role-title">👤 Developer A — Repo Owner</div>
+      <h3>Project Lead</h3>
+      <ul>
+        <li>Creates & owns the GitHub repository</li>
+        <li>Adds Developer B as a collaborator</li>
+        <li>Sets up the base project files</li>
+        <li>Builds the <strong>Add Task</strong> feature</li>
+        <li>Reviews Developer B's pull request</li>
+      </ul>
+    </div>
+    <div class="role-card dev-b">
+      <div class="role-title">👤 Developer B — Collaborator</div>
+      <h3>Feature Developer</h3>
+      <ul>
+        <li>Clones the shared repository</li>
+        <li>Builds the <strong>Delete Task</strong> feature</li>
+        <li>Opens a pull request for review</li>
+        <li>Reviews Developer A's pull request</li>
+        <li>Resolves the merge conflict</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <h2><span class="num">2</span> Phase 1 – Repository Setup</h2>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 1</span>
+        <span class="who dev-a">Developer A</span>
+      </div>
+      <h3>Create the Repository & Base Files</h3>
+      <ul>
+        <li>Create a <strong>public</strong> GitHub repository named <code>devboard-app</code></li>
+        <li>Initialize it with a <code>README.md</code></li>
+        <li>Clone it locally and create the following starter file:</li>
+      </ul>
+      <div class="code-block">
+<span class="comment"># tasks.py — starter file Dev A creates</span>
+<span class="cmd">tasks</span> = []
+
+<span class="cmd">def</span> <span class="str">display_tasks</span>():
+    <span class="cmd">if not</span> tasks:
+        <span class="cmd">print</span>(<span class="str">"No tasks yet."</span>)
+    <span class="cmd">for</span> i, task <span class="cmd">in</span> <span class="cmd">enumerate</span>(tasks, <span class="flag">1</span>):
+        <span class="cmd">print</span>(<span class="str">f"  {i}. {task}"</span>)
+      </div>
+      <ul>
+        <li>Commit this file with message: <code>"Initial commit: add tasks.py starter"</code></li>
+        <li>Push to <code>main</code> and add Developer B as a collaborator</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 2</span>
+        <span class="who dev-b">Developer B</span>
+      </div>
+      <h3>Clone & Verify</h3>
+      <ul>
+        <li>Accept the collaboration invite</li>
+        <li>Clone the repository locally</li>
+        <li>Run <code>git log --oneline</code> to verify you can see Developer A's commit</li>
+        <li>Confirm you can view <code>tasks.py</code> locally</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 2 -->
+  <h2><span class="num">3</span> Phase 2 – Parallel Feature Development</h2>
+  <p>Both developers now work <strong>simultaneously</strong> on their own branches. Do not wait for each other — this simulates real team parallelism.</p>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 3</span>
+        <span class="who dev-a">Developer A</span>
+      </div>
+      <h3>Build the "Add Task" Feature</h3>
+      <ul>
+        <li>Create and switch to branch: <code>feature/add-task</code></li>
+        <li>Add this function to <code>tasks.py</code>:</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">def</span> <span class="str">add_task</span>(task_name):
+    tasks.<span class="cmd">append</span>(task_name)
+    <span class="cmd">print</span>(<span class="str">f"✅ Task added: {task_name}"</span>)
+      </div>
+      <ul>
+        <li>Make <strong>at least 2 commits</strong> with meaningful messages</li>
+        <li>Push the branch to GitHub</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 4</span>
+        <span class="who dev-b">Developer B</span>
+      </div>
+      <h3>Build the "Delete Task" Feature</h3>
+      <ul>
+        <li>Create and switch to branch: <code>feature/delete-task</code></li>
+        <li>Add this function to <code>tasks.py</code> (edit the same file!):</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">def</span> <span class="str">delete_task</span>(task_index):
+    <span class="cmd">if</span> <span class="flag">0</span> &lt;= task_index &lt; <span class="cmd">len</span>(tasks):
+        removed = tasks.<span class="cmd">pop</span>(task_index)
+        <span class="cmd">print</span>(<span class="str">f"🗑️ Removed: {removed}"</span>)
+    <span class="cmd">else</span>:
+        <span class="cmd">print</span>(<span class="str">"Invalid task index."</span>)
+      </div>
+      <ul>
+        <li>Also modify the <code>display_tasks()</code> function slightly (change the print format, e.g. add <code>[TASK]</code> prefix) — this will intentionally create a merge conflict later</li>
+        <li>Make <strong>at least 2 commits</strong> with meaningful messages</li>
+        <li>Push the branch to GitHub</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 3 -->
+  <h2><span class="num">4</span> Phase 3 – Pull Requests & Code Review</h2>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 5</span>
+        <span class="who both">Both Developers</span>
+      </div>
+      <h3>Open Pull Requests</h3>
+      <ul>
+        <li>Each developer opens a Pull Request from their feature branch into <code>main</code></li>
+        <li>Each PR must include a <strong>description</strong> explaining what the feature does and why</li>
+        <li>Each PR must include <strong>at least 1 screenshot</strong> or code snippet in the description</li>
+        <li>Assign the other team member as a <strong>Reviewer</strong></li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 6</span>
+        <span class="who both">Both Developers</span>
+      </div>
+      <h3>Review Each Other's Code</h3>
+      <ul>
+        <li>Leave <strong>at least 2 meaningful inline comments</strong> on the other person's PR (e.g., suggest an improvement, ask a clarifying question, note a potential edge case)</li>
+        <li>The PR author must <strong>respond to all comments</strong> — either make the suggested change or explain why not</li>
+        <li>Once satisfied, approve the PR using the GitHub "Approve" button</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 7</span>
+        <span class="who dev-a">Developer A</span>
+      </div>
+      <h3>Merge the First PR</h3>
+      <ul>
+        <li>Merge Developer A's <code>feature/add-task</code> PR into <code>main</code> first (using <strong>Squash and Merge</strong>)</li>
+        <li>Delete the merged branch on GitHub</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 4 -->
+  <h2><span class="num">5</span> Phase 4 – Merge Conflict Resolution 🔥</h2>
+  <p>Because both developers edited <code>display_tasks()</code>, merging the second PR will cause a conflict. This is intentional!</p>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 8</span>
+        <span class="who dev-b">Developer B</span>
+      </div>
+      <h3>Pull Main and Encounter the Conflict</h3>
+      <ul>
+        <li>Locally, switch to your <code>feature/delete-task</code> branch</li>
+        <li>Run: <code>git fetch origin</code> then <code>git merge origin/main</code></li>
+        <li>Git will report a <strong>merge conflict</strong> in <code>tasks.py</code></li>
+        <li>Open the file, locate the conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>), and study both versions</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 9</span>
+        <span class="who both">Both Developers</span>
+      </div>
+      <h3>Collaborate to Resolve the Conflict</h3>
+      <ul>
+        <li>Discuss (via GitHub comments or chat) which version of <code>display_tasks()</code> to keep, or write a new version that incorporates both changes</li>
+        <li>Developer B manually edits the file to remove conflict markers and produce the final version</li>
+        <li>Run <code>git add tasks.py</code> and <code>git commit -m "resolve: merge conflict in display_tasks"</code></li>
+        <li>Push the resolved branch to GitHub</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 10</span>
+        <span class="who dev-a">Developer A</span>
+      </div>
+      <h3>Merge the Second PR</h3>
+      <ul>
+        <li>Verify the conflict is resolved and the PR is green</li>
+        <li>Merge Developer B's <code>feature/delete-task</code> PR into <code>main</code></li>
+        <li>Delete the merged branch</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 5 -->
+  <h2><span class="num">6</span> Phase 5 – Final Touches</h2>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 11</span>
+        <span class="who both">Both Developers</span>
+      </div>
+      <h3>Update the README</h3>
+      <ul>
+        <li>Developer B creates a new branch: <code>docs/update-readme</code></li>
+        <li>Update <code>README.md</code> to include: project description, how to run the app, and a list of features</li>
+        <li>Developer A reviews and merges this PR using a standard <strong>Merge Commit</strong> (not squash)</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 12</span>
+        <span class="who dev-a">Developer A</span>
+      </div>
+      <h3>Tag the Release</h3>
+      <ul>
+        <li>On the final <code>main</code> branch, create an annotated tag:</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">git</span> tag <span class="flag">-a</span> v1.0.0 <span class="flag">-m</span> <span class="str">"Release v1.0.0 - add and delete task features"</span>
+<span class="cmd">git</span> push origin v1.0.0
+      </div>
+      <ul>
+        <li>Create a <strong>GitHub Release</strong> from this tag with release notes</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Deliverables -->
+  <h2><span class="num">7</span> Deliverables</h2>
+  <p>Submit a single link to your GitHub repository. The instructor will evaluate the following:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Deliverable</th>
+        <th>Where to Find It</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>GitHub repository (public)</td><td>Shared link</td></tr>
+      <tr><td>2</td><td>At least 3 feature branches visible in history</td><td>Branches / Network graph</td></tr>
+      <tr><td>3</td><td>2 closed Pull Requests with inline review comments</td><td>Pull Requests tab</td></tr>
+      <tr><td>4</td><td>Evidence of merge conflict resolution commit</td><td>Commit history on main</td></tr>
+      <tr><td>5</td><td>Annotated tag <code>v1.0.0</code> and GitHub Release</td><td>Releases section</td></tr>
+      <tr><td>6</td><td>Updated README.md with project details</td><td>Repository front page</td></tr>
+      <tr><td>7</td><td>Each member has meaningful commits under their own account</td><td>Contributors graph</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Grading -->
+  <h2><span class="num">8</span> Grading Rubric</h2>
+  <div class="grade-grid">
+    <div class="grade-card">
+      <div class="pts">25</div>
+      <div class="label">Repository Setup & Branch Strategy</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">25</div>
+      <div class="label">Pull Requests & Code Review Quality</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">20</div>
+      <div class="label">Merge Conflict Resolution</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">15</div>
+      <div class="label">Commit Messages & History Clarity</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">10</div>
+      <div class="label">README & Release Tag</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">5</div>
+      <div class="label">Equal Contribution (both accounts)</div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="tip-box">
+    <div class="tip-title">⚠️ Common Mistakes to Avoid</div>
+    <ul>
+      <li>Never commit directly to <code>main</code> — always work on a branch</li>
+      <li>Don't merge your own PR without a review from your partner</li>
+      <li>Write meaningful commit messages — not "fix stuff" or "changes"</li>
+      <li>Always <code>git pull</code> before starting new work to avoid unnecessary conflicts</li>
+      <li>Do not delete conflict markers without actually resolving them</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Git & GitHub · Collaborative Assignment &nbsp;|&nbsp; Graded as a team · both members share the same score
+  </div>
+
+</body>
+</html>
