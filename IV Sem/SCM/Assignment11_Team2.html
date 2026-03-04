@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assignment 11 – GitHub Team Collaboration (Team 1)</title>
+  <style>
+    :root {
+      --brand: #0f172a;
+      --accent: #f97316;
+      --accent2: #6366f1;
+      --green: #22c55e;
+      --red: #ef4444;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+
+      --tl:   #7c3aed;
+      --deva: #4338ca;
+      --devb: #c2410c;
+      --qa:   #166534;
+      --tw:   #0369a1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #fff;
+      color: var(--gray-800);
+      line-height: 1.7;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+    }
+
+    /* ── Header ── */
+    .header {
+      border-left: 6px solid var(--accent);
+      padding: 24px 28px;
+      background: var(--gray-50);
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 36px;
+    }
+    .header .label {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+    }
+    .header h1 { font-size: 26px; font-weight: 800; color: var(--brand); }
+    .header p  { margin-top: 6px; color: var(--gray-600); font-size: 14.5px; }
+    .meta-row  { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+    .meta-item {
+      background: white; border: 1px solid var(--gray-200);
+      border-radius: 8px; padding: 8px 16px; font-size: 13px;
+    }
+    .meta-item strong { color: var(--brand); }
+
+    /* ── Sections ── */
+    h2 {
+      font-size: 17px; font-weight: 700; color: var(--brand);
+      margin: 36px 0 12px; display: flex; align-items: center; gap: 10px;
+    }
+    h2 .num {
+      background: var(--accent2); color: white; font-size: 12px; font-weight: 700;
+      width: 26px; height: 26px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    h3 { font-size: 14.5px; font-weight: 700; color: var(--gray-800); margin: 20px 0 8px; }
+    p  { margin-bottom: 10px; font-size: 14.5px; }
+    ul, ol { padding-left: 22px; margin-bottom: 10px; }
+    li { font-size: 14.5px; margin-bottom: 5px; }
+    code {
+      background: #f1f5f9; border: 1px solid #e2e8f0;
+      border-radius: 4px; padding: 1px 6px; font-size: 13px; font-family: 'Consolas', monospace;
+    }
+
+    /* ── Scenario banner ── */
+    .scenario {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: white; border-radius: 12px; padding: 28px 32px; margin: 24px 0;
+    }
+    .scenario .tag {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      background: var(--accent); display: inline-block; padding: 3px 10px;
+      border-radius: 4px; margin-bottom: 12px;
+    }
+    .scenario h2 { color: white; font-size: 20px; margin: 0 0 10px; }
+    .scenario p  { color: #cbd5e1; font-size: 14px; margin: 0; }
+
+    /* ── Team banner ── */
+    .team-banner {
+      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%);
+      color: white; border-radius: 12px; padding: 20px 28px; margin: 20px 0 28px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .team-badge {
+      background: white; color: #4338ca; font-weight: 800; font-size: 22px;
+      width: 56px; height: 56px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .team-banner h2 { color: white; margin: 0; font-size: 18px; }
+    .team-banner p  { color: #c7d2fe; margin: 4px 0 0; font-size: 13.5px; }
+
+    /* ── Role cards (5-column) ── */
+    .role-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 16px 0 28px;
+    }
+    .role-card {
+      border-radius: 10px; padding: 16px 14px;
+      border: 1.5px solid var(--gray-200);
+    }
+    .role-card.tl   { border-color: var(--tl);   background: #f5f3ff; }
+    .role-card.deva { border-color: #818cf8;      background: #eef2ff; }
+    .role-card.devb { border-color: #fb923c;      background: #fff7ed; }
+    .role-card.qa   { border-color: #4ade80;      background: #f0fdf4; }
+    .role-card.tw   { border-color: #38bdf8;      background: #f0f9ff; }
+    .role-card .role-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 6px; display: block;
+    }
+    .tl   .role-tag { color: var(--tl); }
+    .deva .role-tag { color: var(--deva); }
+    .devb .role-tag { color: var(--devb); }
+    .qa   .role-tag { color: var(--qa); }
+    .tw   .role-tag { color: var(--tw); }
+    .role-card .member-name {
+      font-size: 14px; font-weight: 700; color: var(--brand); margin-bottom: 8px;
+    }
+    .role-card ul { margin: 0; padding-left: 16px; }
+    .role-card li { font-size: 12.5px; margin-bottom: 3px; }
+
+    /* ── Task timeline ── */
+    .timeline { position: relative; padding-left: 32px; margin: 16px 0; }
+    .timeline::before {
+      content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
+      width: 2px; background: var(--gray-200);
+    }
+    .task {
+      position: relative; background: var(--gray-50);
+      border: 1px solid var(--gray-200); border-radius: 10px;
+      padding: 16px 18px; margin-bottom: 12px;
+    }
+    .task::before {
+      content: ''; position: absolute; left: -28px; top: 20px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent2); border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--accent2);
+    }
+    .task .task-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+    .task .step-num {
+      background: var(--brand); color: white; font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .who {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 2px 9px; border-radius: 4px;
+    }
+    .who.all  { background: #dcfce7; color: #166534; }
+    .who.tl   { background: #ede9fe; color: #6d28d9; }
+    .who.deva { background: #eef2ff; color: #4338ca; }
+    .who.devb { background: #fff7ed; color: #c2410c; }
+    .who.qa   { background: #f0fdf4; color: #166534; }
+    .who.tw   { background: #e0f2fe; color: #0369a1; }
+    .who.deva-devb { background: #fef3c7; color: #92400e; }
+    .task h3  { font-size: 14px; margin: 0 0 6px; }
+    .task ul  { margin: 6px 0 0; }
+
+    /* ── Code block ── */
+    .code-block {
+      background: #0f172a; color: #e2e8f0; border-radius: 8px;
+      padding: 14px 18px; font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 10px 0;
+    }
+    .code-block .comment { color: #64748b; }
+    .code-block .cmd     { color: #86efac; }
+    .code-block .flag    { color: #fb923c; }
+    .code-block .str     { color: #fde68a; }
+    .code-block .kw      { color: #93c5fd; }
+
+    /* ── Deliverables table ── */
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 16px 0; }
+    thead th {
+      background: var(--brand); color: white; padding: 10px 14px;
+      text-align: left; font-size: 12px; font-weight: 600;
+    }
+    thead th:first-child { border-radius: 8px 0 0 0; }
+    thead th:last-child  { border-radius: 0 8px 0 0; }
+    tbody tr:nth-child(even) { background: var(--gray-50); }
+    tbody td { padding: 10px 14px; border-bottom: 1px solid var(--gray-200); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ── Grading ── */
+    .grade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .grade-card {
+      border-radius: 10px; padding: 16px; border: 1.5px solid var(--gray-200); text-align: center;
+    }
+    .grade-card .pts { font-size: 28px; font-weight: 800; color: var(--accent2); }
+    .grade-card .label { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
+
+    /* ── Info / tip boxes ── */
+    .tip-box {
+      background: #fffbeb; border: 1.5px solid #fbbf24;
+      border-radius: 10px; padding: 18px 22px; margin: 24px 0;
+    }
+    .tip-box .tip-title {
+      font-weight: 700; color: #92400e; font-size: 13px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tip-box ul { margin: 0; }
+    .tip-box li { font-size: 13.5px; color: #78350f; }
+
+    .info-box {
+      background: #eff6ff; border: 1.5px solid #93c5fd;
+      border-radius: 10px; padding: 18px 22px; margin: 18px 0;
+    }
+    .info-box .info-title {
+      font-weight: 700; color: #1e40af; font-size: 13px; margin-bottom: 8px;
+    }
+    .info-box li { font-size: 13.5px; color: #1e3a8a; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 50px; padding-top: 20px;
+      border-top: 2px solid var(--gray-200);
+      font-size: 12px; color: var(--gray-600); text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      .role-grid { grid-template-columns: 1fr 1fr; }
+      .grade-grid { grid-template-columns: 1fr 1fr; }
+      body { padding: 24px 16px 60px; }
+    }
+    @media (max-width: 480px) {
+      .role-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="label">Practical Assignment 11 · Git &amp; GitHub Advanced</div>
+    <h1>🚀 Real-World Team Collaboration on GitHub</h1>
+    <p>A 5-person, scenario-based assignment simulating a professional software team using Git workflows.</p>
+    <div class="meta-row">
+      <div class="meta-item"><strong>Team Size:</strong> 5 Students</div>
+      <div class="meta-item"><strong>Mode:</strong> Team (Defined Roles)</div>
+      <div class="meta-item"><strong>Builds on:</strong> Assignment 10</div>
+      <div class="meta-item"><strong>Skills:</strong> Branching · PRs · Reviews · Conflicts · CI · Releases</div>
+    </div>
+  </div>
+
+  <!-- Team Banner -->
+  <div class="team-banner">
+    <div class="team-badge">T2</div>
+    <div>
+      <h2>Team 2 — DevBoard Squad</h2>
+      <p>Keshav Saini &nbsp;·&nbsp; Chakka Chinni Krishna &nbsp;·&nbsp; M Tarunesh &nbsp;·&nbsp; Murli Manohar Kumar &nbsp;·&nbsp; Tinashe Prince Mukwena</p>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div class="scenario">
+    <div class="tag">📋 The Scenario</div>
+    <h2>You've been hired by "DevBoard Inc." to build v2.0 of their Task Manager CLI app.</h2>
+    <p>
+      The product team has approved 4 new features. Your 5-person engineering team must develop, review, test,
+      and document these features — exactly like a professional software team. Each member has a distinct role.
+      You will use feature branches, pull requests, code reviews, automated tests, and create a formal release.
+      Coordination and communication via GitHub are graded.
+    </p>
+  </div>
+
+  <!-- Roles -->
+  <h2><span class="num">1</span> Team Roles &amp; Responsibilities</h2>
+  <p>Each member owns one role throughout the entire project. Read your role carefully — responsibilities are cumulative across all phases.</p>
+  <div class="role-grid">
+    <div class="role-card tl">
+      <span class="role-tag">🏗️ Team Lead</span>
+      <div class="member-name">Keshav Saini</div>
+      <ul>
+        <li>Creates &amp; owns the repository</li>
+        <li>Sets up branch protection rules</li>
+        <li>Manages GitHub Project board</li>
+        <li>Approves &amp; merges all PRs into <code>main</code></li>
+        <li>Creates the final GitHub Release</li>
+      </ul>
+    </div>
+    <div class="role-card deva">
+      <span class="role-tag">👩‍💻 Backend Dev A</span>
+      <div class="member-name">Chakka Chinni Krishna</div>
+      <ul>
+        <li>Implements <code>add_task()</code></li>
+        <li>Implements <code>search_task()</code></li>
+        <li>Modifies <code>display_tasks()</code></li>
+        <li>Opens 2 PRs; reviews Dev B's PRs</li>
+        <li>Responds to all review comments</li>
+      </ul>
+    </div>
+    <div class="role-card devb">
+      <span class="role-tag">👨‍💻 Backend Dev B</span>
+      <div class="member-name">M Tarunesh</div>
+      <ul>
+        <li>Implements <code>delete_task()</code></li>
+        <li>Implements <code>update_task()</code></li>
+        <li>Modifies <code>display_tasks()</code></li>
+        <li>Opens 2 PRs; reviews Dev A's PRs</li>
+        <li>Resolves the merge conflict</li>
+      </ul>
+    </div>
+    <div class="role-card qa">
+      <span class="role-tag">🧪 QA Engineer</span>
+      <div class="member-name">Murli Manohar Kumar</div>
+      <ul>
+        <li>Writes pytest test suite</li>
+        <li>Tests all 4 feature functions</li>
+        <li>Opens a <code>feature/tests</code> PR</li>
+        <li>Reviews Dev A's &amp; Dev B's PRs</li>
+        <li>Labels issues &amp; PRs on board</li>
+      </ul>
+    </div>
+    <div class="role-card tw">
+      <span class="role-tag">📝 Tech Writer</span>
+      <div class="member-name">Tinashe Prince Mukwena</div>
+      <ul>
+        <li>Maintains <code>README.md</code></li>
+        <li>Creates <code>CONTRIBUTING.md</code></li>
+        <li>Opens a <code>docs/</code> branch PR</li>
+        <li>Writes GitHub Release notes</li>
+        <li>Documents all features used</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <h2><span class="num">2</span> Phase 1 – Repository Setup &amp; Project Board</h2>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 1</span>
+        <span class="who tl">Keshav (Team Lead)</span>
+      </div>
+      <h3>Create the Repository &amp; Base Codebase</h3>
+      <ul>
+        <li>Create a <strong>public</strong> GitHub repository named <code>devboard-v2</code></li>
+        <li>Initialize with a <code>README.md</code> and a <code>.gitignore</code> for Python</li>
+        <li>Clone locally and create the starter file below, then commit with message: <code>"chore: initial project scaffold"</code></li>
+        <li>Push to <code>main</code> and add all 4 teammates as <strong>Collaborators</strong> (Settings → Collaborators)</li>
+      </ul>
+      <div class="code-block">
+<span class="comment"># tasks.py — starter scaffold (Team Lead creates this)</span>
+<span class="kw">tasks</span> = []  <span class="comment"># Each task: {"id": int, "title": str, "priority": str, "done": bool}</span>
+<span class="kw">_next_id</span> = <span class="flag">1</span>
+
+<span class="cmd">def</span> <span class="str">display_tasks</span>():
+    <span class="cmd">if not</span> tasks:
+        <span class="cmd">print</span>(<span class="str">"📋 No tasks yet."</span>)
+        <span class="cmd">return</span>
+    <span class="cmd">for</span> t <span class="cmd">in</span> tasks:
+        <span class="cmd">print</span>(<span class="str">f"  [{t['id']}] {t['title']} ({t['priority']})"</span>)
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 2</span>
+        <span class="who tl">Keshav (Team Lead)</span>
+      </div>
+      <h3>Configure Branch Protection &amp; GitHub Project Board</h3>
+      <ul>
+        <li>Go to <strong>Settings → Branches</strong> and add a branch protection rule for <code>main</code>:</li>
+        <ul>
+          <li>✅ Require pull request before merging</li>
+          <li>✅ Require at least <strong>1 approving review</strong></li>
+          <li>✅ Dismiss stale reviews when new commits are pushed</li>
+        </ul>
+        <li>Create a <strong>GitHub Project (Board view)</strong> with 4 columns: <code>To Do</code> · <code>In Progress</code> · <code>In Review</code> · <code>Done</code></li>
+        <li>Add 6 issues to the board (one per feature + tests + docs) and assign each to the relevant team member</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 3</span>
+        <span class="who all">All Members</span>
+      </div>
+      <h3>Clone &amp; Confirm Setup</h3>
+      <ul>
+        <li>Each member accepts the collaborator invite and clones the repository</li>
+        <li>Run <code>git log --oneline</code> to confirm the initial commit is visible</li>
+        <li>Move your assigned issue on the Project Board from <code>To Do</code> → <code>In Progress</code></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 2 -->
+  <h2><span class="num">3</span> Phase 2 – Parallel Feature Development</h2>
+  <p>Backend Dev A and Backend Dev B work <strong>simultaneously</strong> on separate branches. This simulates real-world parallel development.</p>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 4</span>
+        <span class="who deva">Chinni Krishna (Backend Dev A)</span>
+      </div>
+      <h3>Implement <code>add_task()</code> Feature</h3>
+      <ul>
+        <li>Create and switch to branch: <code>feature/add-task</code></li>
+        <li>Add the following function to <code>tasks.py</code>:</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">def</span> <span class="str">add_task</span>(title, priority=<span class="str">"medium"</span>):
+    <span class="kw">global</span> _next_id
+    <span class="cmd">if</span> priority <span class="cmd">not in</span> [<span class="str">"high"</span>, <span class="str">"medium"</span>, <span class="str">"low"</span>]:
+        <span class="cmd">print</span>(<span class="str">"❌ Priority must be: high, medium, or low"</span>)
+        <span class="cmd">return</span>
+    task = {<span class="str">"id"</span>: _next_id, <span class="str">"title"</span>: title, <span class="str">"priority"</span>: priority, <span class="str">"done"</span>: <span class="kw">False</span>}
+    tasks.<span class="cmd">append</span>(task)
+    _next_id += <span class="flag">1</span>
+    <span class="cmd">print</span>(<span class="str">f"✅ Task added: [{task['id']}] {title} ({priority})"</span>)
+      </div>
+      <ul>
+        <li>Make <strong>at least 2 meaningful commits</strong> (e.g., <code>"feat: add add_task with priority support"</code>)</li>
+        <li>Push the branch to GitHub</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 5</span>
+        <span class="who deva">Chinni Krishna (Backend Dev A)</span>
+      </div>
+      <h3>Implement <code>search_task()</code> Feature</h3>
+      <ul>
+        <li>Create a new branch: <code>feature/search-task</code> (branch off <code>main</code>, not your previous branch)</li>
+        <li>Add the following function to <code>tasks.py</code>:</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">def</span> <span class="str">search_task</span>(keyword):
+    results = [t <span class="cmd">for</span> t <span class="cmd">in</span> tasks <span class="cmd">if</span> keyword.<span class="cmd">lower</span>() <span class="cmd">in</span> t[<span class="str">"title"</span>].<span class="cmd">lower</span>()]
+    <span class="cmd">if not</span> results:
+        <span class="cmd">print</span>(<span class="str">f"🔍 No tasks found matching '{keyword}'"</span>)
+    <span class="cmd">else</span>:
+        <span class="cmd">print</span>(<span class="str">f"🔍 Found {len(results)} match(es):"</span>)
+        <span class="cmd">for</span> t <span class="cmd">in</span> results:
+            <span class="cmd">print</span>(<span class="str">f"  [{t['id']}] {t['title']}"</span>)
+      </div>
+      <ul>
+        <li>Also modify <code>display_tasks()</code> to show a header line: <code>print(f"--- {len(tasks)} Task(s) ---")</code> before the loop — this <strong>intentionally creates a merge conflict</strong> later</li>
+        <li>Make at least 2 commits. Push the branch.</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 6</span>
+        <span class="who devb">Tarunesh (Backend Dev B)</span>
+      </div>
+      <h3>Implement <code>delete_task()</code> Feature</h3>
+      <ul>
+        <li>Create and switch to branch: <code>feature/delete-task</code></li>
+        <li>Add the following function to <code>tasks.py</code>:</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">def</span> <span class="str">delete_task</span>(task_id):
+    <span class="kw">global</span> tasks
+    original_len = <span class="cmd">len</span>(tasks)
+    tasks = [t <span class="cmd">for</span> t <span class="cmd">in</span> tasks <span class="cmd">if</span> t[<span class="str">"id"</span>] != task_id]
+    <span class="cmd">if</span> <span class="cmd">len</span>(tasks) &lt; original_len:
+        <span class="cmd">print</span>(<span class="str">f"🗑️ Task {task_id} deleted."</span>)
+    <span class="cmd">else</span>:
+        <span class="cmd">print</span>(<span class="str">f"❌ No task found with ID {task_id}"</span>)
+      </div>
+      <ul>
+        <li>Make at least 2 commits. Push the branch.</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 7</span>
+        <span class="who devb">Tarunesh (Backend Dev B)</span>
+      </div>
+      <h3>Implement <code>update_task()</code> Feature</h3>
+      <ul>
+        <li>Create a new branch: <code>feature/update-task</code> (branch off <code>main</code>)</li>
+        <li>Add the following function to <code>tasks.py</code>:</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">def</span> <span class="str">update_task</span>(task_id, new_title=<span class="kw">None</span>, new_priority=<span class="kw">None</span>):
+    <span class="cmd">for</span> t <span class="cmd">in</span> tasks:
+        <span class="cmd">if</span> t[<span class="str">"id"</span>] == task_id:
+            <span class="cmd">if</span> new_title:
+                t[<span class="str">"title"</span>] = new_title
+            <span class="cmd">if</span> new_priority <span class="cmd">in</span> [<span class="str">"high"</span>, <span class="str">"medium"</span>, <span class="str">"low"</span>]:
+                t[<span class="str">"priority"</span>] = new_priority
+            <span class="cmd">print</span>(<span class="str">f"✏️ Task {task_id} updated."</span>)
+            <span class="cmd">return</span>
+    <span class="cmd">print</span>(<span class="str">f"❌ Task {task_id} not found."</span>)
+      </div>
+      <ul>
+        <li>Also modify <code>display_tasks()</code> to show done status: change the print line to include <code>[✓]</code> or <code>[ ]</code> prefix based on <code>t['done']</code> — this <strong>intentionally causes a merge conflict</strong> with Dev A's change</li>
+        <li>Make at least 2 commits. Push the branch.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 3 -->
+  <h2><span class="num">4</span> Phase 3 – Testing &amp; Quality Assurance</h2>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 8</span>
+        <span class="who qa">Murli (QA Engineer)</span>
+      </div>
+      <h3>Write the Test Suite</h3>
+      <ul>
+        <li>Create and switch to branch: <code>feature/tests</code></li>
+        <li>Create a file <code>test_tasks.py</code> with the following test structure using <code>pytest</code>:</li>
+      </ul>
+      <div class="code-block">
+<span class="comment"># test_tasks.py — QA Engineer writes this</span>
+<span class="kw">import</span> tasks
+
+<span class="cmd">def</span> <span class="str">setup_function</span>():
+    tasks.tasks.<span class="cmd">clear</span>()
+    tasks._next_id = <span class="flag">1</span>
+
+<span class="cmd">def</span> <span class="str">test_add_task_creates_entry</span>():
+    tasks.<span class="cmd">add_task</span>(<span class="str">"Buy groceries"</span>, <span class="str">"high"</span>)
+    <span class="cmd">assert</span> <span class="cmd">len</span>(tasks.tasks) == <span class="flag">1</span>
+    <span class="cmd">assert</span> tasks.tasks[<span class="flag">0</span>][<span class="str">"title"</span>] == <span class="str">"Buy groceries"</span>
+
+<span class="cmd">def</span> <span class="str">test_add_task_invalid_priority</span>():
+    tasks.<span class="cmd">add_task</span>(<span class="str">"Read book"</span>, <span class="str">"urgent"</span>)
+    <span class="cmd">assert</span> <span class="cmd">len</span>(tasks.tasks) == <span class="flag">0</span>
+
+<span class="cmd">def</span> <span class="str">test_delete_task_removes_entry</span>():
+    tasks.<span class="cmd">add_task</span>(<span class="str">"Write tests"</span>, <span class="str">"medium"</span>)
+    tasks.<span class="cmd">delete_task</span>(<span class="flag">1</span>)
+    <span class="cmd">assert</span> <span class="cmd">len</span>(tasks.tasks) == <span class="flag">0</span>
+
+<span class="cmd">def</span> <span class="str">test_update_task_changes_title</span>():
+    tasks.<span class="cmd">add_task</span>(<span class="str">"Old title"</span>, <span class="str">"low"</span>)
+    tasks.<span class="cmd">update_task</span>(<span class="flag">1</span>, new_title=<span class="str">"New title"</span>)
+    <span class="cmd">assert</span> tasks.tasks[<span class="flag">0</span>][<span class="str">"title"</span>] == <span class="str">"New title"</span>
+
+<span class="cmd">def</span> <span class="str">test_search_task_finds_match</span>():
+    tasks.<span class="cmd">add_task</span>(<span class="str">"Deploy to staging"</span>, <span class="str">"high"</span>)
+    results = [t <span class="cmd">for</span> t <span class="cmd">in</span> tasks.tasks <span class="cmd">if</span> <span class="str">"staging"</span> <span class="cmd">in</span> t[<span class="str">"title"</span>]]
+    <span class="cmd">assert</span> <span class="cmd">len</span>(results) == <span class="flag">1</span>
+      </div>
+      <ul>
+        <li>Write <strong>at least 2 additional tests</strong> of your own (edge cases, boundary conditions)</li>
+        <li>Run tests locally: <code>pytest test_tasks.py -v</code></li>
+        <li>Make at least 2 commits. Push the branch.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 4 -->
+  <h2><span class="num">5</span> Phase 4 – Pull Requests &amp; Code Review</h2>
+  <p>All feature branches must go through a formal PR review process. <strong>No one merges their own PR.</strong></p>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 9</span>
+        <span class="who deva-devb">Chinni Krishna &amp; Tarunesh (Both Devs)</span>
+      </div>
+      <h3>Open All Feature Pull Requests</h3>
+      <ul>
+        <li>Each developer opens PRs for <strong>each</strong> of their feature branches into <code>main</code> (4 PRs total)</li>
+        <li>Every PR must include:
+          <ul>
+            <li>A clear <strong>description</strong>: what the feature does, why it's needed, and any known edge cases</li>
+            <li>A <strong>screenshot</strong> or code snippet showing the feature working in the terminal</li>
+            <li>Reference to the linked GitHub Issue (type <code>Closes #N</code> in the PR description)</li>
+          </ul>
+        </li>
+        <li>Assign <strong>Murli (QA)</strong> and the other Dev as <strong>Reviewers</strong></li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 10</span>
+        <span class="who qa">Murli (QA Engineer)</span>
+      </div>
+      <h3>Open the Test Suite PR &amp; Review Feature PRs</h3>
+      <ul>
+        <li>Open a PR for <code>feature/tests</code> into <code>main</code> with a description listing all test cases and their purpose</li>
+        <li>On each of the 4 feature PRs, leave <strong>at least 2 meaningful inline comments</strong> (e.g., suggest a better variable name, point out a missing edge case, ask about error handling)</li>
+        <li>Approve PRs that meet quality standards; request changes on those that don't</li>
+        <li>Move reviewed cards to <code>In Review</code> on the Project Board</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 11</span>
+        <span class="who deva-devb">Chinni Krishna &amp; Tarunesh (Both Devs)</span>
+      </div>
+      <h3>Respond to Review Comments</h3>
+      <ul>
+        <li>Each developer must <strong>respond to every review comment</strong> on their PRs — either make the suggested change and push a new commit, or write a clear explanation for why the suggestion was not applied</li>
+        <li>At least one comment per PR must result in a code change (a new commit pushed to the PR branch)</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 12</span>
+        <span class="who tl">Keshav (Team Lead)</span>
+      </div>
+      <h3>Merge the First Two PRs</h3>
+      <ul>
+        <li>Once <code>feature/add-task</code> and <code>feature/delete-task</code> are approved, merge both into <code>main</code> using <strong>Squash and Merge</strong></li>
+        <li>Delete the merged branches on GitHub after merging</li>
+        <li>Move the corresponding Project Board cards to <code>Done</code></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 5 -->
+  <h2><span class="num">6</span> Phase 5 – Merge Conflict Resolution 🔥</h2>
+  <p>Because <strong>Chinni Krishna</strong> and <strong>Tarunesh</strong> both modified <code>display_tasks()</code> in their second branches, merging the remaining PRs will trigger a conflict. This is intentional!</p>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 13</span>
+        <span class="who devb">Tarunesh (Backend Dev B)</span>
+      </div>
+      <h3>Encounter &amp; Identify the Conflict</h3>
+      <ul>
+        <li>On your local machine, switch to <code>feature/update-task</code></li>
+        <li>Run: <code>git fetch origin</code> then <code>git merge origin/main</code></li>
+        <li>Git will report a <strong>merge conflict</strong> in <code>tasks.py</code> inside <code>display_tasks()</code></li>
+        <li>Open the file and locate the conflict markers: <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code></li>
+        <li>Take a screenshot of the conflict markers — you'll attach it to the PR</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 14</span>
+        <span class="who all">Chinni Krishna &amp; Tarunesh (Coordinate)</span>
+      </div>
+      <h3>Collaborate to Resolve the Conflict</h3>
+      <ul>
+        <li>Discuss via GitHub comments on the PR — which version of <code>display_tasks()</code> should be kept, or write a new merged version that incorporates both changes</li>
+        <li>The final <code>display_tasks()</code> should show: the task count header line <em>and</em> the done/undone prefix — combining both developers' changes</li>
+        <li<>Tarunesh manually edits <code>tasks.py</code> to remove all conflict markers and produce the final resolved version</li>
+        <li>Run: <code>git add tasks.py</code> then <code>git commit -m "fix: resolve merge conflict in display_tasks"</code></li>
+        <li>Push the resolved branch to GitHub</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 15</span>
+        <span class="who tl">Keshav (Team Lead)</span>
+      </div>
+      <h3>Merge Remaining PRs</h3>
+      <ul>
+        <li>Verify the conflict in <code>feature/update-task</code> is resolved and the PR shows green (no conflicts)</li>
+        <li>Merge <code>feature/search-task</code> and <code>feature/update-task</code> into <code>main</code></li>
+        <li>Merge <code>feature/tests</code> into <code>main</code> using a standard <strong>Merge Commit</strong> (not squash)</li>
+        <li>Delete all merged branches</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Phase 6 -->
+  <h2><span class="num">7</span> Phase 6 – Documentation &amp; Release</h2>
+
+  <div class="timeline">
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 16</span>
+        <span class="who tw">Tinashe (Technical Writer)</span>
+      </div>
+      <h3>Write Documentation</h3>
+      <ul>
+        <li>Create branch: <code>docs/readme-and-contributing</code></li>
+        <li>Update <code>README.md</code> to include:
+          <ul>
+            <li>Project name and description</li>
+            <li>How to install dependencies and run the app</li>
+            <li>A <strong>Features</strong> section listing all 4 functions with usage examples</li>
+            <li>Team members table (name, role, GitHub username)</li>
+          </ul>
+        </li>
+        <li>Create a new file <code>CONTRIBUTING.md</code> that explains:
+          <ul>
+            <li>Branch naming conventions used by the team (<code>feature/</code>, <code>docs/</code>, <code>fix/</code>)</li>
+            <li>PR checklist (description, screenshot, reviewer assigned)</li>
+            <li>Commit message format (e.g., <code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>chore:</code>)</li>
+          </ul>
+        </li>
+        <li>Open a PR for this branch and assign <strong>Keshav (Team Lead)</strong> as Reviewer</li>
+      </ul>
+    </div>
+
+    <div class="task">
+      <div class="task-header">
+        <span class="step-num">Step 17</span>
+        <span class="who tl">Keshav (Team Lead)</span>
+      </div>
+      <h3>Review Docs PR &amp; Create the Release</h3>
+      <ul>
+        <li>Review <code>docs/readme-and-contributing</code> — leave at least 1 comment, approve, and merge with a standard Merge Commit</li>
+        <li>On the final <code>main</code> branch, create an annotated tag:</li>
+      </ul>
+      <div class="code-block">
+<span class="cmd">git</span> tag <span class="flag">-a</span> v2.0.0 <span class="flag">-m</span> <span class="str">"Release v2.0.0 — add, delete, update, search features + tests"</span>
+<span class="cmd">git</span> push origin v2.0.0
+      </div>
+      <ul>
+        <li>Go to GitHub → Releases → Create a new Release from tag <code>v2.0.0</code></li>
+        <li>Write release notes listing all new features and the team members who built them</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Deliverables -->
+  <h2><span class="num">8</span> Deliverables</h2>
+  <p>Submit a single link to your <code>devboard-v2</code> GitHub repository. The instructor will evaluate the following:</p>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Deliverable</th><th>Owner</th><th>Where to Find It</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Public GitHub repository with branch protection enabled</td><td>Keshav</td><td>Settings → Branches</td></tr>
+      <tr><td>2</td><td>GitHub Project Board with all 6 issues moved to Done</td><td>All</td><td>Projects tab</td></tr>
+      <tr><td>3</td><td>4 feature branches visible in commit history</td><td>Chinni Krishna &amp; Tarunesh</td><td>Network graph / Branches</td></tr>
+      <tr><td>4</td><td>4 closed PRs with inline review comments from QA</td><td>Murli</td><td>Pull Requests tab (Closed)</td></tr>
+      <tr><td>5</td><td>Evidence of merge conflict resolution commit in history</td><td>Tarunesh</td><td>Commit history on main</td></tr>
+      <tr><td>6</td><td>Passing test suite (<code>test_tasks.py</code> with 7+ tests)</td><td>Murli</td><td>Repository files</td></tr>
+      <tr><td>7</td><td>Updated <code>README.md</code> and <code>CONTRIBUTING.md</code></td><td>Tinashe</td><td>Repository front page</td></tr>
+      <tr><td>8</td><td>Annotated tag <code>v2.0.0</code> and GitHub Release with notes</td><td>Keshav</td><td>Releases section</td></tr>
+      <tr><td>9</td><td>Each member has meaningful commits under their own account</td><td>All</td><td>Contributors graph</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Grading -->
+  <h2><span class="num">9</span> Grading Rubric</h2>
+  <div class="grade-grid">
+    <div class="grade-card">
+      <div class="pts">20</div>
+      <div class="label">Repository Setup, Protection &amp; Project Board</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">20</div>
+      <div class="label">Feature Implementations (all 4 functions correct)</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">15</div>
+      <div class="label">Pull Request Quality &amp; Code Review Depth</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">15</div>
+      <div class="label">Merge Conflict Resolution (process + outcome)</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">15</div>
+      <div class="label">Test Suite Coverage &amp; Quality</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">10</div>
+      <div class="label">Documentation (README + CONTRIBUTING)</div>
+    </div>
+    <div class="grade-card">
+      <div class="pts">5</div>
+      <div class="label">GitHub Release &amp; Annotated Tag</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">📌 Grading Note</div>
+    <ul>
+      <li>The team shares a collective score. All members benefit or suffer together.</li>
+      <li>Individual contribution is verified via the Contributors graph — every member must have commits under their own GitHub account.</li>
+      <li>A member with zero commits or zero PR activity will receive a 0 for the individual participation component regardless of team score.</li>
+    </ul>
+  </div>
+
+  <!-- Tips -->
+  <div class="tip-box">
+    <div class="tip-title">⚠️ Common Mistakes to Avoid</div>
+    <ul>
+      <li>Never commit directly to <code>main</code> — branch protection rules will block it anyway</li>
+      <li>Do not merge your own PR — the Team Lead is the only one who merges into main</li>
+      <li>Write meaningful commit messages using the prefix format: <code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>test:</code>, <code>chore:</code></li>
+      <li>Always <code>git pull origin main</code> before branching to avoid unnecessary conflicts</li>
+      <li>Do not delete conflict markers without actually resolving the code — the file must be syntactically valid Python after resolution</li>
+      <li>QA: run <code>pytest</code> locally before pushing — do not push failing tests</li>
+      <li>Tech Writer: link your PR description to the relevant issues using <code>Closes #N</code></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Assignment 11 · Git &amp; GitHub Advanced Team Collaboration &nbsp;|&nbsp; Team 2: DevBoard Squad &nbsp;|&nbsp; Graded as a team — all members share the same score
+  </div>
+
+</body>
+</html>
