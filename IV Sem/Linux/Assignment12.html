@@ -1,0 +1,202 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); color: var(--color-text-primary); }
+.page { max-width: 680px; padding: 28px 0 48px; }
+
+.header { margin-bottom: 24px; }
+.company-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.company-logo { width: 36px; height: 36px; border-radius: 8px; background: #185FA5; display: flex; align-items: center; justify-content: center; }
+.company-logo svg { width: 20px; height: 20px; }
+.company-name { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); }
+.company-sub { font-size: 11px; color: var(--color-text-secondary); opacity: .7; }
+h1 { font-size: 22px; font-weight: 500; line-height: 1.35; margin-bottom: 8px; }
+.meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0; }
+.badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; }
+.badge-blue   { background: #E6F1FB; color: #0C447C; }
+.badge-coral  { background: #FAECE7; color: #712B13; }
+.badge-amber  { background: #FAEEDA; color: #633806; }
+.badge-teal   { background: #E1F5EE; color: #085041; }
+.badge-purple { background: #EEEDFE; color: #3C3489; }
+
+.brief { border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0; background: var(--color-background-secondary); padding: 14px 16px; margin: 20px 0; font-size: 13.5px; line-height: 1.8; color: var(--color-text-secondary); }
+.brief strong { color: var(--color-text-primary); font-weight: 500; }
+
+.divider { height: 1px; background: var(--color-border-tertiary); margin: 22px 0; }
+
+.section-label { font-size: 10.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .09em; color: var(--color-text-secondary); margin-bottom: 12px; }
+
+.phase { border: 1px solid var(--color-border-tertiary); border-radius: 12px; margin-bottom: 14px; overflow: hidden; }
+.phase-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--color-background-secondary); border-bottom: 1px solid var(--color-border-tertiary); }
+.phase-pill { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; white-space: nowrap; }
+.phase-title { font-size: 14px; font-weight: 500; }
+.phase-tag   { font-size: 11px; color: var(--color-text-secondary); margin-top: 1px; }
+.phase-body  { padding: 14px 16px; }
+.phase-context { font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 12px; }
+
+.task { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--color-border-tertiary); font-size: 13px; line-height: 1.65; }
+.task:first-child { border-top: none; padding-top: 0; }
+.task-id { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); min-width: 22px; padding-top: 2px; }
+.task-text { color: var(--color-text-primary); }
+.task-text em { color: var(--color-text-secondary); font-style: normal; }
+code { font-family: var(--font-mono); font-size: 12px; background: var(--color-background-secondary); padding: 1px 6px; border-radius: 4px; }
+
+.tip { display: flex; gap: 8px; align-items: flex-start; background: var(--color-background-secondary); border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+
+.concepts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 22px; }
+.concept-chip { font-size: 12px; color: var(--color-text-secondary); background: var(--color-background-secondary); border: 1px solid var(--color-border-tertiary); border-radius: 8px; padding: 8px 12px; line-height: 1.5; }
+.concept-chip strong { color: var(--color-text-primary); font-weight: 500; display: block; font-size: 12px; margin-bottom: 1px; }
+
+.deliverable { border: 1px solid var(--color-border-secondary); border-radius: 12px; padding: 18px 20px; background: var(--color-background-secondary); margin-top: 6px; }
+.deliverable h3 { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+.del-list { list-style: none; padding: 0; }
+.del-list li { font-size: 13px; color: var(--color-text-secondary); padding: 5px 0 5px 16px; position: relative; border-top: 1px solid var(--color-border-tertiary); line-height: 1.6; }
+.del-list li:first-child { border-top: none; }
+.del-list li::before { content: "→"; position: absolute; left: 0; color: var(--color-text-secondary); }
+
+.bonus { border: 1px dashed var(--color-border-secondary); border-radius: 10px; padding: 14px 16px; margin-top: 14px; }
+.bonus-label { font-size: 11px; font-weight: 500; color: #854F0B; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+.bonus p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; }
+</style>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="company-bar">
+      <div class="company-logo">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="7" height="7" rx="1.5" fill="white" opacity=".9"/>
+          <rect x="11" y="2" width="7" height="7" rx="1.5" fill="white" opacity=".6"/>
+          <rect x="2" y="11" width="7" height="7" rx="1.5" fill="white" opacity=".6"/>
+          <rect x="11" y="11" width="7" height="7" rx="1.5" fill="white" opacity=".9"/>
+        </svg>
+      </div>
+      <div>
+        <div class="company-name">NovaTech Solutions Pvt. Ltd.</div>
+        <div class="company-sub">IT Infrastructure Department · Intern Onboarding Lab</div>
+      </div>
+    </div>
+    <h1>Linux System Administration Lab<br>— Night Shift Maintenance Drill</h1>
+    <div class="meta-row">
+      <span class="badge badge-blue">Day 9 Assignment</span>
+      <span class="badge badge-coral">Enterprise Scenario</span>
+      <span class="badge badge-amber">Solo Lab</span>
+    </div>
+  </div>
+
+  <!-- Brief -->
+  <div class="brief">
+    <strong>Your role:</strong> Junior Linux System Administrator at NovaTech Solutions.<br>
+    <strong>Situation:</strong> It is 11 PM. The senior admin is unreachable. You must run tonight's scheduled maintenance tasks on the company's internal servers — all from a single terminal session. The tasks include connectivity checks, log collection, and a long-running backup that must survive even if your terminal accidentally closes.
+  </div>
+
+  <!-- Concepts covered -->
+  <p class="section-label">Concepts covered in this lab</p>
+  <div class="concepts-grid">
+    <div class="concept-chip"><strong>Background jobs ( &amp; )</strong>Running tasks without blocking the terminal</div>
+    <div class="concept-chip"><strong>jobs, fg, bg</strong>Monitoring and switching job states</div>
+    <div class="concept-chip"><strong>Ctrl+Z / suspend</strong>Pausing a foreground process</div>
+    <div class="concept-chip"><strong>kill %n</strong>Terminating specific jobs by number</div>
+    <div class="concept-chip"><strong>wait + tput bel</strong>Blocking until all jobs finish, then alerting</div>
+    <div class="concept-chip"><strong>nohup</strong>Keeping a process alive after logout</div>
+    <div class="concept-chip"><strong>Redirection ( &gt;, &gt;&gt; )</strong>Saving command output to log files</div>
+    <div class="concept-chip"><strong>Pipes ( | ) &amp; wc</strong>Counting and filtering command output</div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Mission tasks — complete in order</p>
+
+  <!-- Phase 1 -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-pill badge-blue">Phase 1</span>
+      <div>
+        <div class="phase-title">Connectivity verification</div>
+        <div class="phase-tag">Background jobs · Redirection · Pipes</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p class="phase-context">NovaTech's monitoring dashboard is down. You need to manually verify that three critical servers — <code>google.com</code>, <code>bing.com</code>, and <code>yahoo.com</code> — are reachable. The checks must run <em>simultaneously</em> so the report is ready quickly.</p>
+      <div class="task"><span class="task-id">1.1</span><span class="task-text">Launch a ping of <strong>25 packets</strong> to each of the three hosts as <strong>background jobs</strong>, redirecting each output to a separate log file: <code>server1.log</code>, <code>server2.log</code>, <code>server3.log</code>.</span></div>
+      <div class="task"><span class="task-id">1.2</span><span class="task-text">Immediately run <code>jobs</code> to confirm all three are running. Take note of their job numbers.</span></div>
+      <div class="task"><span class="task-id">1.3</span><span class="task-text">While they run, use another command to count how many lines are currently in <code>server1.log</code> using a pipe. <em>(Hint: the file grows in real time.)</em></span></div>
+      <div class="task"><span class="task-id">1.4</span><span class="task-text">Use <code>wait</code> combined with <code>tput bel</code> and an <code>echo</code> so the terminal beeps and prints <code>Connectivity checks complete!</code> the moment all three jobs finish.</span></div>
+      <div class="task"><span class="task-id">1.5</span><span class="task-text">After they finish, display a summary: print the last 3 lines of each log file to confirm packets were received.</span></div>
+      <div class="tip">💡 <span>Use <code>ping -c 25 google.com &gt; server1.log &amp;</code> · <code>jobs</code> · <code>cat server1.log | wc -l</code> · <code>wait; tput bel; echo "..."</code> · <code>tail -3 server1.log</code></span></div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-pill badge-teal">Phase 2</span>
+      <div>
+        <div class="phase-title">Handling an urgent interruption</div>
+        <div class="phase-tag">Suspend · bg · fg · kill</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p class="phase-context">Midway through running a new long connectivity test (<code>ping -c 100 bing.com</code>), you get an urgent Slack message asking you to check a different server immediately. You cannot cancel the test — you just need to pause it.</p>
+      <div class="task"><span class="task-id">2.1</span><span class="task-text">Start <code>ping -c 100 bing.com &gt; /dev/null</code> in the <strong>foreground</strong> (no <code>&amp;</code>).</span></div>
+      <div class="task"><span class="task-id">2.2</span><span class="task-text"><strong>Suspend</strong> it without killing it. Run <code>jobs</code> and write down what status is shown next to the job.</span></div>
+      <div class="task"><span class="task-id">2.3</span><span class="task-text">Simulate attending to the urgent task by running: <code>echo 'Urgent check done'</code> and <code>ping -c 3 google.com</code>.</span></div>
+      <div class="task"><span class="task-id">2.4</span><span class="task-text">Resume the suspended ping in the <strong>background</strong> so it continues while you move to the next task.</span></div>
+      <div class="task"><span class="task-id">2.5</span><span class="task-text">Run <code>jobs</code> again — describe in one sentence what changed in the status output.</span></div>
+      <div class="task"><span class="task-id">2.6</span><span class="task-text">You decide this test is taking too long. Bring it to the foreground and cancel it. Then confirm with <code>jobs</code> that no jobs remain.</span></div>
+      <div class="tip">💡 <span>Use <code>Ctrl+Z</code> · <code>bg %1</code> · <code>fg %1</code> · <code>Ctrl+C</code> · <code>jobs</code></span></div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-pill badge-amber">Phase 3</span>
+      <div>
+        <div class="phase-title">Multi-server load simulation</div>
+        <div class="phase-tag">Multiple jobs · kill %n · jobs</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p class="phase-context">You need to run load tests against four internal endpoints simultaneously. Midway through, one endpoint reports back as unresponsive — you must kill only that job without disturbing the others.</p>
+      <div class="task"><span class="task-id">3.1</span><span class="task-text">Launch four background ping jobs (use <code>google.com</code>, <code>bing.com</code>, <code>yahoo.com</code>, <code>github.com</code>) each sending 50 packets to <code>/dev/null</code>.</span></div>
+      <div class="task"><span class="task-id">3.2</span><span class="task-text">Run <code>jobs</code> and identify which job number corresponds to <code>yahoo.com</code>.</span></div>
+      <div class="task"><span class="task-id">3.3</span><span class="task-text"><strong>Kill only the yahoo.com job</strong> using its job number.</span></div>
+      <div class="task"><span class="task-id">3.4</span><span class="task-text">Run <code>jobs</code> again. Do the remaining job numbers shift? Write down your observation.</span></div>
+      <div class="task"><span class="task-id">3.5</span><span class="task-text">Let the remaining three jobs finish naturally. Use a single command that waits for all of them and then prints <code>Load test complete</code>.</span></div>
+      <div class="tip">💡 <span>Use <code>&amp;</code> × 4 · <code>jobs</code> · <code>kill %n</code> · <code>wait; echo "..."</code></span></div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase">
+    <div class="phase-header">
+      <span class="phase-pill badge-purple">Phase 4</span>
+      <div>
+        <div class="phase-title">The overnight backup</div>
+        <div class="phase-tag">nohup · ps · nohup.out</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <p class="phase-context">The final task is a long backup simulation that will take hours. You cannot keep your terminal open all night. The process must keep running even after you close the session, and you need to be able to check its progress when you return in the morning.</p>
+      <div class="task"><span class="task-id">4.1</span><span class="task-text">Start the backup simulation using <code>nohup</code>: run <code>ping -c 50 google.com</code> as a background job that is immune to hangups. Note the PID printed in the terminal.</span></div>
+      <div class="task"><span class="task-id">4.2</span><span class="task-text">Verify it is running by checking for its PID using <code>ps</code>.</span></div>
+      <div class="task"><span class="task-id">4.3</span><span class="task-text"><strong>Close your current terminal</strong> and open a brand new terminal window. This simulates logging out and back in.</span></div>
+      <div class="task"><span class="task-id">4.4</span><span class="task-text">In the new terminal, confirm the process is <strong>still running</strong> by checking its PID with <code>ps</code>.</span></div>
+      <div class="task"><span class="task-id">4.5</span><span class="task-text">Read the output the process has written so far using the correct file.</span></div>
+      <div class="task"><span class="task-id">4.6</span><span class="task-text">Count how many lines of output the backup job has produced so far using a pipe.</span></div>
+      <div class="tip">💡 <span>Use <code>nohup ping -c 50 google.com &amp;</code> · <code>ps &lt;pid&gt;</code> · <code>cat nohup.out</code> · <code>cat nohup.out | wc -l</code></span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+ 
+
+  <!-- Bonus -->
+  <div class="bonus">
+    <div class="bonus-label">⭐ Bonus challenge</div>
+    <p>After Phase 1 is complete, write a single pipeline command that searches all three log files for the word <code>transmitted</code> and prints only those lines — without opening the files one by one. Then count how many total lines matched across all files.</p>
+  </div>
+
+</div>
