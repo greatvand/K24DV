@@ -1,0 +1,32 @@
+
+
+**Task 1 — System identity card**
+
+Write a script that asks the user for their name and role (e.g. Developer, Admin). The script must then print a formatted identity card showing their name, role, current logged-in user, current date and time, and the machine's hostname — all labelled clearly.
+
+---
+
+**Task 2 — Disk and memory reporter**
+
+Write a script that asks the user for a directory path. Print a report showing the total disk usage of that directory, how much free memory the system currently has, and how many files are present in that directory. Each value must be labelled and printed on its own line.
+
+---
+
+**Task 3 — Process snapshot tool**
+
+Write a script that asks the user for a process name (e.g. `bash`, `cron`). The script must print how many processes with that name are currently running, and list them with their PIDs. All output must be saved to a file named `process-report.txt` as well as printed on screen.
+
+---
+
+**Task 4 — Silent background monitor**
+
+Write a script that asks the user for a hostname to monitor and a duration in seconds. The script must ping that host continuously, redirecting all output to a log file named `monitor.log`, running in the background using `nohup`. After launching it, the script must print the PID of the background job and tell the user how to check the log.
+
+---
+
+**Task 5 — Crontab backup tool**
+
+Write a script that asks the user for a backup filename. The script must export the current crontab into that file, print how many cron jobs were saved, and display the contents of the saved file on screen with a heading. If the crontab is empty, the output should clearly say so.
+
+---
+
