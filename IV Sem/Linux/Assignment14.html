@@ -1,0 +1,147 @@
+
+<style>
+  .wrap { padding: 1.5rem 0; font-family: var(--font-sans); }
+  .header { margin-bottom: 1.5rem; }
+  .header h2 { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 4px; }
+  .header p { font-size: 13px; color: var(--color-text-secondary); margin: 0; line-height: 1.6; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); margin-right: 4px; }
+  .tag-sysadmin { background: #EEEDFE; color: #3C3489; }
+  .tag-devops   { background: #E1F5EE; color: #085041; }
+  .tag-security { background: #FAECE7; color: #712B13; }
+  .tag-data     { background: #FAEEDA; color: #633806; }
+  .tag-user     { background: #E6F1FB; color: #0C447C; }
+  .q-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .q-top { display: flex; align-items: flex-start; gap: 12px; }
+  .q-num { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); min-width: 24px; margin-top: 2px; }
+  .q-body { flex: 1; }
+  .q-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 4px; }
+  .q-scenario { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 6px; font-style: italic; }
+  .q-desc { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 8px; line-height: 1.65; }
+  .tags-row { display: flex; flex-wrap: wrap; gap: 4px; }
+</style>
+<div class="wrap">
+  <div class="header">
+    <h2>Bash scripting — real-world assignment</h2>
+    <p>Each question describes a practical situation. Write a shell script that solves it. Test your script with different inputs before submitting.</p>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q1</span>
+      <div class="q-body">
+        <p class="q-title">ATM PIN entry</p>
+        <p class="q-scenario">You are building a simple terminal-based banking kiosk.</p>
+        <p class="q-desc">The script should greet the user by name (entered visibly) and then ask for their PIN (hidden input). If the PIN is exactly 4 digits, print "Access granted" in green. If it is not 4 digits, print "Invalid PIN format" in red.</p>
+        <div class="tags-row"><span class="tag tag-user">user input</span><span class="tag tag-security">security</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q2</span>
+      <div class="q-body">
+        <p class="q-title">Electricity bill calculator</p>
+        <p class="q-scenario">A utility company wants a quick script for field agents to estimate bills on-site.</p>
+        <p class="q-desc">Ask the agent to enter the number of units consumed and the rate per unit. Calculate and display the subtotal, a 15% tax amount, and the total bill — each on a separate labelled line.</p>
+        <div class="tags-row"><span class="tag tag-data">arithmetic</span><span class="tag tag-user">user input</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q3</span>
+      <div class="q-body">
+        <p class="q-title">Hospital triage classifier</p>
+        <p class="q-scenario">A clinic needs a quick command-line tool to assign patient priority levels.</p>
+        <p class="q-desc">Ask for the patient's reported pain score (1–10). Print "Critical — see doctor immediately" for 8–10, "Moderate — wait for next available slot" for 4–7, and "Mild — take a seat" for 1–3. Reject any value outside that range with an error.</p>
+        <div class="tags-row"><span class="tag tag-user">user input</span><span class="tag tag-data">conditionals</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q4</span>
+      <div class="q-body">
+        <p class="q-title">Server health dashboard</p>
+        <p class="q-scenario">A junior sysadmin needs a single script to check if a server is healthy before a deployment.</p>
+        <p class="q-desc">Display a bold blue header line, then print: current uptime, available RAM, top 3 CPU-consuming processes, and whether a web server (nginx or apache2) is active. Separate each section with a styled divider line.</p>
+        <div class="tags-row"><span class="tag tag-sysadmin">sysadmin</span><span class="tag tag-devops">devops</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q5</span>
+      <div class="q-body">
+        <p class="q-title">Software installer wizard</p>
+        <p class="q-scenario">Your team ships a tool that must be installed differently depending on the operating system.</p>
+        <p class="q-desc">Ask the user which OS they are running. Use a case statement to print the correct install command: Homebrew for Mac, apt for Debian/Ubuntu, dnf for RHEL/CentOS (use fall-through so both map to the same instruction), and an unsupported message for anything else.</p>
+        <div class="tags-row"><span class="tag tag-devops">devops</span><span class="tag tag-sysadmin">sysadmin</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q6</span>
+      <div class="q-body">
+        <p class="q-title">Employee shift router</p>
+        <p class="q-scenario">A factory uses a terminal script to route employees to the right briefing room when they clock in.</p>
+        <p class="q-desc">Ask the employee to enter the day of the week. Use a case statement to print "Morning briefing — Room A" for weekdays and "Weekend skeleton crew — Room B" for Saturday and Sunday. Print "Unrecognised day" for anything else.</p>
+        <div class="tags-row"><span class="tag tag-user">user input</span><span class="tag tag-data">case</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q7</span>
+      <div class="q-body">
+        <p class="q-title">Log file analyser</p>
+        <p class="q-scenario">A support team wants to quickly count how many times an error keyword appears in a log file.</p>
+        <p class="q-desc">Ask the user for a log file path. If the file does not exist, print an error in red and exit. If it does exist, ask for a keyword to search. Print how many lines contain that keyword and display those lines.</p>
+        <div class="tags-row"><span class="tag tag-sysadmin">sysadmin</span><span class="tag tag-data">conditionals</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q8</span>
+      <div class="q-body">
+        <p class="q-title">Disk space alert</p>
+        <p class="q-scenario">A hosting company wants an automated check that warns when a drive is running low.</p>
+        <p class="q-desc">Read the current disk usage percentage for the root partition using <code>df</code>. Strip the % symbol to get a plain integer. If usage is above 80%, print a bold red warning. If between 60–80%, print a yellow caution. Otherwise print a green "All clear".</p>
+        <div class="tags-row"><span class="tag tag-sysadmin">sysadmin</span><span class="tag tag-devops">devops</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q9</span>
+      <div class="q-body">
+        <p class="q-title">Conference registration desk</p>
+        <p class="q-scenario">An event organiser needs a terminal kiosk for walk-in registrations.</p>
+        <p class="q-desc">Ask for the attendee's full name and email. If either field is left blank, print "Registration incomplete" in red. If both are provided, print a formatted confirmation card showing the name, email, and a registration ID formed by taking the first 3 characters of the name followed by a random 3-digit number.</p>
+        <div class="tags-row"><span class="tag tag-user">user input</span><span class="tag tag-data">string ops</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-num">Q10</span>
+      <div class="q-body">
+        <p class="q-title">Automated backup checker</p>
+        <p class="q-scenario">A DevOps team runs nightly backups and needs a morning script to verify the latest backup file exists and is usable.</p>
+        <p class="q-desc">Ask the user for the backup directory path. Check if the directory exists. If it does, find and print the name and size (in KB) of the most recently modified file inside it. If the directory is missing or empty, print a formatted alert in red and exit with a non-zero status code.</p>
+        <div class="tags-row"><span class="tag tag-devops">devops</span><span class="tag tag-sysadmin">sysadmin</span></div>
+      </div>
+    </div>
+  </div>
+</div>
