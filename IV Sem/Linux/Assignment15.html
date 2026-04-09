@@ -1,0 +1,285 @@
+
+<style>
+  .cs { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.1rem 1.25rem; margin-bottom: 14px; }
+  .cs-top { display: flex; align-items: flex-start; gap: 12px; }
+  .cs-badge { font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .cs-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 3px; }
+  .cs-company { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 8px; }
+  .section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-secondary); margin: 10px 0 3px; }
+  .cs-body { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 6px; }
+  .cs-task { font-size: 13px; color: var(--color-text-primary); line-height: 1.65; margin: 0; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; margin: 6px 3px 0 0; }
+  .hint-btn { font-size: 12px; color: var(--color-text-secondary); background: none; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 4px 10px; cursor: pointer; margin-top: 10px; }
+  .hint-btn:hover { background: var(--color-background-secondary); }
+  .hint-box { display: none; margin-top: 10px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 12px; color: var(--color-text-secondary); font-family: var(--font-mono); line-height: 1.8; border-left: 2px solid #1D9E75; }
+  .hint-box.open { display: block; }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 8px 0 10px; }
+</style>
+
+<h2 class="sr-only">10 real-world bash case studies for students</h2>
+<div style="padding: 1rem 0 0.5rem;">
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#EEEDFE;color:#3C3489;">DevOps</span>
+    <div>
+      <p class="cs-title">1 — The broken deployment pipeline</p>
+      <p class="cs-company">E-commerce startup, 3-person engineering team</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">Every time a developer pushes code, a deploy script runs on the server. One Friday night, a junior dev pushed broken code. The site went down for 40 minutes because nobody noticed — the deploy script ran, crashed silently, but the old process had already been killed.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a deploy script that: (1) pulls the latest code with <code>git pull</code>, (2) runs the build command <code>npm run build</code>, and (3) only restarts the app with <code>systemctl restart myapp</code> if both previous steps succeeded. If any step fails, print exactly which step failed, log it with a timestamp to <code>deploy.log</code>, and exit with a non-zero code — leaving the running app untouched.</p>
+  <div>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">exit codes</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;">if/else chaining</span>
+    <span class="tag" style="background:#F1EFE8;color:#444441;">logging</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;">date</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">if ! git pull; then echo "Step 1 failed" | tee -a deploy.log; exit 1; fi
+Then repeat for npm run build. Only reach systemctl if both pass.
+Use $(date '+%Y-%m-%d %H:%M:%S') to prefix log lines.</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#E1F5EE;color:#085041;">Data / Analytics</span>
+    <div>
+      <p class="cs-title">2 — The CFO's Monday morning report</p>
+      <p class="cs-company">Retail chain, 12 stores across the country</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">Each store generates a <code>sales_STOREID.csv</code> file every night. The CFO wants a single summary every Monday morning: how many stores reported, what the total sales figure is, and which store had the highest sales. The current process is a junior analyst manually opening 12 files.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a script that loops through all <code>sales_*.csv</code> files in a folder. Each file has two columns: <code>item,amount</code>. For each file, sum the amount column and track which file had the highest total. At the end, print: number of files processed, grand total across all stores, and the name of the top-performing store file.</p>
+  <div>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">for loop</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;">awk</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;">variables</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;">arithmetic</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">total=$(awk -F',' 'NR>1 {sum+=$2} END {print sum}' "$file")
+Use if [ "$total" -gt "$max" ] to track highest.
+Accumulate grand_total=$((grand_total + total))</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#FAECE7;color:#712B13;">Security</span>
+    <div>
+      <p class="cs-title">3 — The SSL certificate time bomb</p>
+      <p class="cs-company">SaaS company, B2B product</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">A company's SSL certificate expired at 3am on a Tuesday. Every customer's browser showed a scary security warning. Revenue dropped to zero for 6 hours. The certificate had been auto-renewing fine for 2 years — until it didn't.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a script that accepts a domain name as <code>$1</code>. Use <code>openssl</code> to check when the SSL certificate expires. If it expires in more than 30 days, print "OK". If between 30 and 7 days, print "WARNING: expires in N days". If under 7 days, print "CRITICAL" and exit with code 2. If the domain can't be reached, handle that case explicitly.</p>
+  <div>
+    <span class="tag" style="background:#FAECE7;color:#712B13;">exit codes</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">if/elif/else</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;">openssl</span>
+    <span class="tag" style="background:#F1EFE8;color:#444441;">$1 argument</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">expiry=$(echo | openssl s_client -connect "$1":443 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+expiry_epoch=$(date -d "$expiry" +%s)
+days_left=$(( (expiry_epoch - $(date +%s)) / 86400 ))</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#E6F1FB;color:#0C447C;">Infrastructure</span>
+    <div>
+      <p class="cs-title">4 — The runaway Docker host</p>
+      <p class="cs-company">Agency running 30+ client projects on one server</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">An agency ran dozens of Docker containers for client preview environments. Developers would spin up containers for demos and forget about them. Over 6 months, 200+ stopped containers and dangling images accumulated, filling up the disk and eventually crashing the host.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a cleanup script that: (1) lists all stopped containers and removes them, counting how many were deleted, (2) removes all dangling images (images with no tag), (3) prints a before/after disk usage comparison using <code>df</code>. The script should ask for confirmation ("Are you sure? y/n") before doing anything destructive.</p>
+  <div>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;">docker</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">read / confirmation</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;">loops</span>
+    <span class="tag" style="background:#F1EFE8;color:#444441;">command substitution</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">read -p "Are you sure? (y/n): " confirm
+[ "$confirm" != "y" ] && exit 0
+stopped=$(docker ps -aq -f status=exited)
+Count with: echo "$stopped" | grep -c .
+Remove with: docker rm $stopped</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#EAF3DE;color:#27500A;">HR / IT Ops</span>
+    <div>
+      <p class="cs-title">5 — The 50-user onboarding nightmare</p>
+      <p class="cs-company">University IT department, start of academic year</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">Every September, the IT team at a university manually creates Linux accounts for 200+ new students. Each account needs a username, a home directory, and a temporary password. Last year it took 3 people an entire day. Half the accounts had typos.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">You are given a file <code>students.txt</code> where each line is <code>firstname,lastname,studentid</code>. Write a script that reads each line, generates a username as <code>firstname_studentid</code> (lowercase), checks if the user already exists, creates the account if not, and logs either "Created: username" or "Skipped: username (already exists)" to <code>onboarding.log</code>.</p>
+  <div>
+    <span class="tag" style="background:#EAF3DE;color:#3B6D11;">while read</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">IFS / field splitting</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;">id / useradd</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;">string manipulation</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">while IFS=',' read -r first last id; do
+  username=$(echo "${first}_${id}" | tr '[:upper:]' '[:lower:]')
+  if id "$username" &>/dev/null; then echo "Skipped: $username"
+  else useradd "$username"; echo "Created: $username"; fi
+done < students.txt</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#FBEAF0;color:#72243E;">Media / Storage</span>
+    <div>
+      <p class="cs-title">6 — The photographer's chaos drive</p>
+      <p class="cs-company">Freelance photographer, 80,000 photos on one hard drive</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">A photographer dumps every photo from every job into one folder called <code>UNSORTED/</code>. After 4 years it has 80,000 JPEGs with no organisation. She wants them moved into folders by year and month, based on each file's last-modified date, e.g. <code>2023/04/</code>.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a script that loops through every <code>.jpg</code> and <code>.jpeg</code> file in <code>UNSORTED/</code>. For each file, extract the year and month from its modification date. Create the directory <code>sorted/YYYY/MM/</code> if it doesn't exist, then move the file there. Print a progress counter every 100 files. At the end, print total files moved.</p>
+  <div>
+    <span class="tag" style="background:#FBEAF0;color:#72243E;">for loop</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">date / stat</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;">mkdir -p</span>
+    <span class="tag" style="background:#F1EFE8;color:#444441;">modulo arithmetic</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">year=$(date -r "$file" '+%Y')
+month=$(date -r "$file" '+%m')
+dest="sorted/$year/$month"
+mkdir -p "$dest" && mv "$file" "$dest/"
+Print counter: if (( count % 100 == 0 )); then echo "$count files done..."; fi</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#FAEEDA;color:#633806;">Database / Backup</span>
+    <div>
+      <p class="cs-title">7 — The database backup that ate the disk</p>
+      <p class="cs-company">Fintech startup, regulated environment</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">A startup had a cron job backing up their Postgres database every day to <code>/backups/</code>. Nobody set up any retention policy. After 14 months, backups filled the disk, the database crashed writing new data, and the app went down on a Friday before a bank holiday.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a backup script that dumps the database to <code>/backups/db_YYYY-MM-DD.sql</code>, then deletes any backup files older than 7 days. After cleanup, count how many backup files remain and print "Backup complete. X backups retained." If the dump command fails, do not delete old backups — exit immediately with an error.</p>
+  <div>
+    <span class="tag" style="background:#FAEEDA;color:#633806;">exit codes</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">find</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;">date formatting</span>
+    <span class="tag" style="background:#FAECE7;color:#712B13;">conditional logic</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">filename="db_$(date +%F).sql"
+if ! pg_dump mydb > "/backups/$filename"; then echo "Dump failed!"; exit 1; fi
+find /backups -name "db_*.sql" -mtime +7 -delete
+count=$(ls /backups/db_*.sql | wc -l)</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#F1EFE8;color:#444441;">Networking</span>
+    <div>
+      <p class="cs-title">8 — The multi-server morning check</p>
+      <p class="cs-company">IT admin, small business with 8 branch offices</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">An IT admin is responsible for 8 servers across different branch offices. Every morning he manually SSH-es into each one to check disk space, memory, and whether key services are running — a task that takes 30 minutes and is often skipped.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a script that reads server IPs from a file <code>servers.txt</code> (one IP per line). For each server, SSH in and check: (1) disk usage on <code>/</code>, (2) whether <code>nginx</code> is running. Print a summary line per server: <code>[192.168.x.x] Disk: 74% | nginx: UP</code>. If SSH to a server fails, mark it as <code>UNREACHABLE</code> and continue to the next.</p>
+  <div>
+    <span class="tag" style="background:#F1EFE8;color:#444441;">while read</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">ssh</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;">exit codes</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;">remote commands</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">ssh -o ConnectTimeout=5 "$ip" "df / | awk 'NR==2{print \$5}'" 2>/dev/null
+If ssh fails, $? will be non-zero — use if ! ssh ...; then echo "UNREACHABLE"; continue; fi
+The continue keyword skips to the next loop iteration.</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#E6F1FB;color:#0C447C;">Security / Audit</span>
+    <div>
+      <p class="cs-title">9 — The GDPR breach nobody spotted</p>
+      <p class="cs-company">Healthcare clinic, compliance audit</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">During a GDPR audit, a clinic discovered that files containing patient data (any file with "patient" in the name) had been placed in a world-readable public web directory <code>/var/www/html</code> by mistake. Nobody had checked file permissions in 2 years.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a script that recursively searches <code>/var/www/html</code> for any file whose name contains "patient" (case-insensitive). For each match: print the file path and its current permissions, fix the permissions to <code>600</code> (owner read/write only), and append the finding to an audit report <code>audit.log</code> with a timestamp. Print a final count of files fixed.</p>
+  <div>
+    <span class="tag" style="background:#FAECE7;color:#712B13;">find</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">chmod</span>
+    <span class="tag" style="background:#E1F5EE;color:#085041;">stat</span>
+    <span class="tag" style="background:#F1EFE8;color:#444441;">while read / loops</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">find /var/www/html -iname "*patient*" -type f | while read -r filepath; do
+  perms=$(stat -c '%a' "$filepath")
+  echo "$(date) FIXED: $filepath (was $perms)" >> audit.log
+  chmod 600 "$filepath"
+  ((count++))
+done</div>
+</div>
+
+<div class="cs">
+  <div class="cs-top">
+    <span class="cs-badge" style="background:#E1F5EE;color:#085041;">CI/CD</span>
+    <div>
+      <p class="cs-title">10 — The test suite that lied</p>
+      <p class="cs-company">Product team shipping mobile app updates weekly</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <p class="section-label">What happened</p>
+  <p class="cs-body">A team had 5 test scripts: <code>test_auth.sh</code>, <code>test_api.sh</code>, <code>test_db.sh</code>, <code>test_ui.sh</code>, <code>test_payments.sh</code>. Their pipeline ran them all and reported "passed" — because someone had written it with <code>; </code> between commands instead of <code>&&</code>, so failures were silently ignored.</p>
+  <p class="section-label">Your task</p>
+  <p class="cs-task">Write a test runner script that executes each <code>test_*.sh</code> file in a directory. Track which tests passed and which failed based on exit codes. At the end, print a full summary table with pass/fail status per test. If any single test failed, exit the whole script with code 1 (so the CI pipeline correctly marks the build as broken). Never stop early — always run all tests.</p>
+  <div>
+    <span class="tag" style="background:#E1F5EE;color:#085041;">exit codes</span>
+    <span class="tag" style="background:#EEEDFE;color:#3C3489;">for loop</span>
+    <span class="tag" style="background:#FAEEDA;color:#633806;">arrays</span>
+    <span class="tag" style="background:#E6F1FB;color:#0C447C;">final exit strategy</span>
+  </div>
+  <button class="hint-btn" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide hint':'Show hint'">Show hint</button>
+  <div class="hint-box">failed=0
+for test in test_*.sh; do
+  if bash "$test"; then results+=("PASS: $test")
+  else results+=("FAIL: $test"); failed=1; fi
+done
+Print ${results[@]} in a loop, then exit $failed</div>
+</div>
+
+</div>
