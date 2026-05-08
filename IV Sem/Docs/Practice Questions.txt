@@ -1,0 +1,24 @@
+
+
+1. **Merging Branches with a Simple Conflict**
+2. **Simple Merge Conflict Resolution**
+3. **Collaboration with Two GitHub Accounts**
+4. **Forking an Existing Repository & Submitting a Pull Request**
+5. **Basic Rebase with a Small Conflict**
+6. **Cloning a Repo & Simple Branch Collaboration (Two Accounts)**
+7. **Resolving a Merge Conflict in Two Branches**
+8. **Simulate a Team Workflow Using Two GitHub Accounts**
+9. **Handling Multiple Merge Conflicts Across Multiple Files**
+10. **Simulate a GitHub Fork and Merge Workflow**
+
+
+Q1  | (a) File Permissions                  | (b) User & Group Management
+Q2  | (a) Shell Scripting - Variables       | (b) Process Management
+Q3  | (a) Cron Jobs                         | (b) Package Management
+Q4  | (a) Symbolic & Hard Links             | (b) Shell Scripting - Loops
+Q5  | (a) User & Group Management           | (b) Shell Scripting - File Operations
+Q6  | (a) File Permissions & Ownership      | (b) Cron Jobs
+Q7  | (a) Process Management                | (b) Shell Scripting - System Info
+Q8  | (a) Text Processing                   | (b) Package Management - Scripting
+Q9  | (a) Symbolic & Hard Links             | (b) Cron Jobs
+Q10 | (a) User, Group & Permissions         | (b) Shell Scripting - End to End
